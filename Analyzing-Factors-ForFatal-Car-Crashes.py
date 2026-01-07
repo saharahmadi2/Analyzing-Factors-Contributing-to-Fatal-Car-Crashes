@@ -4,18 +4,18 @@ import os
 
 # Step 0: Change working directory
 os.chdir(r"/Users/sahar/Desktop/Group Project cis 3920")
-print("📁 Directory set to:", os.getcwd())
+print(" Directory set to:", os.getcwd())
 
-print("\n✅ Starting crash data summary...")
+print("\n Starting crash data summary...")
 
 # Step 1: Load datasets
 try:
     crashes = pd.read_csv("Cleaned_Motor_Vehicle_Collisions.csv", low_memory=False)
     weather = pd.read_csv("Weather conditions.csv", low_memory=False)
     road = pd.read_csv("Road Conditions.csv", low_memory=False)
-    print("✅ Files loaded successfully.")
+    print("Files loaded successfully.")
 except Exception as e:
-    print("❌ Error loading files:", e)
+    print("Error loading files:", e)
     sys.exit()
 
 # Step 2: Parse datetime columns
@@ -24,7 +24,7 @@ try:
     weather['DateTime'] = pd.to_datetime(weather['DateTime'], errors='coerce')
     road['e_spec_date'] = pd.to_datetime(road['e_spec_date'], errors='coerce')
 except Exception as e:
-    print("❌ Error parsing dates:", e)
+    print("Error parsing dates:", e)
 
 # Step 3: Clean crash data
 crashes.rename(columns={
@@ -46,7 +46,7 @@ try:
     non_ford_fatal = fatal_crashes - ford_fatal
     non_ford_fatal_rate = (non_ford_fatal / non_ford_crashes * 100) if non_ford_crashes > 0 else 0
 except Exception as e:
-    print("❌ Error calculating summary stats:", e)
+    print(" Error calculating summary stats:", e)
     sys.exit()
 
 # Step 5: Create Summary Table
@@ -70,6 +70,6 @@ summary_df = pd.DataFrame({
 })
 
 # Step 6: Output results
-print("\n📊 Crash Data Summary (No Merging):")
+print("\nCrash Data Summary (No Merging):")
 print(summary_df.to_string(index=False))
 sys.stdout.flush()
